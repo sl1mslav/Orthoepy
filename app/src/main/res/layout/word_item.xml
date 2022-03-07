@@ -2,7 +2,7 @@
     android:id="@+id/word_item_cv"
     android:layout_width="match_parent"
     android:layout_height="50dp"
-    android:layout_marginBottom="5dp"
+    android:layout_marginBottom="10dp"
     android:backgroundTint="#ECECEC"
     android:isScrollContainer="false"
     app:cardCornerRadius="22dp"
