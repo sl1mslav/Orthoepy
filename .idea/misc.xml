@@ -18,7 +18,7 @@
         <entry key="..\:/Orthoepy/Orthoepy/app/src/main/res/layout/activity_main.xml" value="0.25" />
         <entry key="..\:/Orthoepy/Orthoepy/app/src/main/res/layout/fragment_dictionary.xml" value="0.25416666666666665" />
         <entry key="..\:/Orthoepy/Orthoepy/app/src/main/res/layout/fragment_home.xml" value="0.264" />
-        <entry key="..\:/Orthoepy/Orthoepy/app/src/main/res/layout/fragment_store.xml" value="0.25" />
+        <entry key="..\:/Orthoepy/Orthoepy/app/src/main/res/layout/fragment_store.xml" value="0.1" />
         <entry key="..\:/Orthoepy/Orthoepy/app/src/main/res/layout/search_ortho.xml" value="0.264" />
         <entry key="..\:/Orthoepy/Orthoepy/app/src/main/res/layout/word_item.xml" value="0.264" />
         <entry key="..\:/Orthoepy/Orthoepy/app/src/main/res/menu/bottom_navigation_menu.xml" value="0.25416666666666665" />
@@ -30,5 +30,12 @@
   </component>
   <component name="ProjectType">
     <option name="id" value="Android" />
+  </component>
+  <component name="VisualizationToolProject">
+    <option name="state">
+      <ProjectState>
+        <option name="scale" value="0.1" />
+      </ProjectState>
+    </option>
   </component>
 </project>
