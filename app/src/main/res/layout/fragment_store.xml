@@ -1,78 +1,96 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:paddingStart="21sp"
-    android:paddingEnd="21sp"
+    android:padding="21dp"
     tools:context=".StoreFragment">
 
     <!-- TODO: Update blank fragment layout -->
-    <include layout="@layout/search_ortho"/>
+    <include
+        android:id="@+id/store_search_ortho"
+        layout="@layout/search_ortho" />
 
-    <androidx.appcompat.widget.LinearLayoutCompat
-        android:layout_width="match_parent"
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/store_tab_title"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:paddingTop="10sp"
+        android:paddingBottom="23sp"
+        android:text="@string/storeTabTitle"
 
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/storeTabTitle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:paddingTop="10sp"
-            android:paddingEnd="134sp"
-            android:paddingBottom="23sp"
-            android:text="@string/storeTabTitle"
-            android:textColor="@color/black"
-            android:textSize="36sp"
-            android:textStyle="bold" />
+        android:textColor="@color/black"
+        android:textSize="36sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="@id/store_search_ortho"
+        app:layout_constraintTop_toBottomOf="@+id/store_search_ortho" />
 
-        <androidx.appcompat.widget.AppCompatTextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:paddingBottom="5sp"
-            android:text="@string/letterQuantity"
-            android:textColor="@color/black"
-            android:textSize="18sp" />
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/appCompatTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="30sp"
+        android:paddingBottom="5sp"
+        android:text="@string/letterQuantity"
+        android:textColor="@color/black"
+        android:textSize="21sp"
+        app:layout_constraintBottom_toBottomOf="@+id/store_tab_title"
+        app:layout_constraintEnd_toEndOf="@id/store_search_ortho"
+        app:layout_constraintTop_toBottomOf="@+id/store_search_ortho" />
 
-    </androidx.appcompat.widget.LinearLayoutCompat>
 
     <ScrollView
-        android:layout_width="370dp"
-        android:layout_height="400dp">
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@+id/addButton"
+        app:layout_constraintEnd_toEndOf="@id/store_search_ortho"
+        app:layout_constraintStart_toStartOf="@id/store_search_ortho"
+        app:layout_constraintTop_toBottomOf="@+id/store_tab_title"
+        android:layout_marginBottom="15dp"
+        app:layout_constraintVertical_bias="0.0">
 
-        <androidx.appcompat.widget.LinearLayoutCompat
-            android:layout_width="365dp"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <include layout="@layout/word_item"/>
+            <include layout="@layout/word_item" />
 
-            <include layout="@layout/word_item"/>
-            <include layout="@layout/word_item"/>
-            <include layout="@layout/word_item"/>
-            <include layout="@layout/word_item"/>
-            <include layout="@layout/word_item"/>
-            <include layout="@layout/word_item"/>
-            <include layout="@layout/word_item"/>
-            <include layout="@layout/word_item"/>
+            <include layout="@layout/word_item" />
 
-        </androidx.appcompat.widget.LinearLayoutCompat>
+            <include layout="@layout/word_item" />
+
+            <include layout="@layout/word_item" />
+
+            <include layout="@layout/word_item" />
+
+            <include layout="@layout/word_item" />
+
+            <include layout="@layout/word_item" />
+
+            <include layout="@layout/word_item" />
+
+            <include layout="@layout/word_item" />
+
+            <include layout="@layout/word_item" />
+
+
+        </LinearLayout>
 
     </ScrollView>
 
-
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/addButton"
+        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
         android:layout_width="55dp"
         android:layout_height="55dp"
-        android:layout_gravity="end"
+        android:padding="2dp"
         android:backgroundTint="#ECECEC"
+        android:contentDescription="@string/it_s_a_button_to_add_words"
         android:src="@drawable/ic_add"
-        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-        app:maxImageSize="54dp"
-        android:contentDescription="@string/it_s_a_button_to_add_words"/>
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:maxImageSize="54dp" />
 
-</androidx.appcompat.widget.LinearLayoutCompat>
+</androidx.constraintlayout.widget.ConstraintLayout>
