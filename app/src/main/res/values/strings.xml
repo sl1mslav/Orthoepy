@@ -7,5 +7,6 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="storeTabTitle">Магазин</string>
     <string name="it_s_a_button_to_add_words">It\'s a button to add words.</string>
-    <string name="letterQuantity">букв:</string>
+    <string name="letterQuantity">Букв:</string>
+    <string name="prompt_to_enter_word">Введите искомое слово:</string>
 </resources>
