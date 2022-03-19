@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".HomeFragment">
+    tools:context=".fragmentcode.HomeFragment">
 
 
     <TextView
@@ -26,7 +26,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
-        android:text="@string/letterQuantity"
+        android:text="@string/available_letters"
         android:textColor="#000000"
         android:textSize="20sp"
         app:layout_constraintBaseline_toBaselineOf="@id/orthoepy"
@@ -95,29 +95,26 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/statistics_cv" />
 
-    <com.example.orthoepy.TrainingCardView
+    <com.example.orthoepy.extralayout.TrainingCardView
         android:id="@+id/exam_ege_cv"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="16dp"
-        android:layout_marginStart="12dp"
-        android:layout_marginTop="8dp"
         app:descriptionText="Варианты по норма единого государственного экзамена по русскому языку"
         app:icon="@drawable/ic_home"
         app:labelText="ЕГЭ"
         app:layout_constraintStart_toStartOf="@+id/exams_tv"
+        app:layout_constraintEnd_toEndOf="@id/gift_cv"
         app:layout_constraintTop_toBottomOf="@+id/exams_tv" />
 
-    <com.example.orthoepy.TrainingCardView
+    <com.example.orthoepy.extralayout.TrainingCardView
         android:id="@+id/exam_zno_cv"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="16dp"
-        android:layout_marginStart="12dp"
         app:descriptionText="Варианты по норма внешнего независимого оценивания по украинскому языку"
         app:icon="@drawable/ic_home"
         app:labelText="ЗНО"
         app:layout_constraintStart_toStartOf="@+id/exam_ege_cv"
+        app:layout_constraintEnd_toEndOf="@+id/gift_cv"
         app:layout_constraintTop_toBottomOf="@+id/exam_ege_cv" />
 
     <TextView

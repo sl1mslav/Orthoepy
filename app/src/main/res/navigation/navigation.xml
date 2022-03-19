@@ -7,17 +7,17 @@
 
     <fragment
         android:id="@+id/homeFragment"
-        android:name="com.example.orthoepy.HomeFragment"
+        android:name="com.example.orthoepy.fragmentcode.HomeFragment"
         android:label="fragment_home"
         tools:layout="@layout/fragment_home" />
     <fragment
         android:id="@+id/dictionaryFragment"
-        android:name="com.example.orthoepy.DictionaryFragment"
+        android:name="com.example.orthoepy.fragmentcode.DictionaryFragment"
         android:label="fragment_dictionary"
         tools:layout="@layout/fragment_dictionary" />
     <fragment
         android:id="@+id/storeFragment"
-        android:name="com.example.orthoepy.StoreFragment"
+        android:name="com.example.orthoepy.fragmentcode.StoreFragment"
         android:label="fragment_store"
         tools:layout="@layout/fragment_store" />
 </navigation>

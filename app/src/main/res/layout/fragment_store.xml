@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="21dp"
-    tools:context=".StoreFragment">
+    tools:context=".fragmentcode.StoreFragment">
 
     <!-- TODO: Update blank fragment layout -->
     <include
@@ -27,12 +27,12 @@
         app:layout_constraintTop_toBottomOf="@+id/store_search_ortho" />
 
     <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/appCompatTextView"
+        android:id="@+id/available_letters"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="30sp"
         android:paddingBottom="5sp"
-        android:text="@string/letterQuantity"
+        android:text="@string/available_letters"
         android:textColor="@color/black"
         android:textSize="21sp"
         app:layout_constraintBottom_toBottomOf="@+id/store_tab_title"
@@ -40,45 +40,15 @@
         app:layout_constraintTop_toBottomOf="@+id/store_search_ortho" />
 
 
-    <ScrollView
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/store_recycler"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        app:layout_constraintBottom_toTopOf="@+id/addButton"
-        app:layout_constraintEnd_toEndOf="@id/store_search_ortho"
-        app:layout_constraintStart_toStartOf="@id/store_search_ortho"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/store_tab_title"
-        android:layout_marginBottom="15dp"
-        app:layout_constraintVertical_bias="0.0">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-            <include layout="@layout/word_item" />
-
-            <include layout="@layout/word_item" />
-
-            <include layout="@layout/word_item" />
-
-            <include layout="@layout/word_item" />
-
-            <include layout="@layout/word_item" />
-
-            <include layout="@layout/word_item" />
-
-            <include layout="@layout/word_item" />
-
-            <include layout="@layout/word_item" />
-
-            <include layout="@layout/word_item" />
-
-            <include layout="@layout/word_item" />
-
-
-        </LinearLayout>
-
-    </ScrollView>
+        app:layout_constraintBottom_toBottomOf="@id/addButton"
+        tools:listitem="@layout/word_item" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/addButton"
