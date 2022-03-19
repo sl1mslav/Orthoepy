@@ -1,11 +1,10 @@
-package com.example.orthoepy
+package com.example.orthoepy.extralayout
 
 import android.content.Context
 import android.util.AttributeSet
 import android.view.LayoutInflater
-import android.widget.LinearLayout
-import androidx.cardview.widget.CardView
 import androidx.constraintlayout.widget.ConstraintLayout
+import com.example.orthoepy.R
 import com.example.orthoepy.databinding.TrainingCardBinding
 
 class TrainingCardView(
