@@ -73,7 +73,6 @@ class StoreFragment : Fragment() {
                 Toast.makeText(context, "Недостаточно букв", Toast.LENGTH_SHORT).show()
             }
         }
-
         return binding.root
     }
 

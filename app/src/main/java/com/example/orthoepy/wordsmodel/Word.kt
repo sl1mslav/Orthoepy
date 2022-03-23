@@ -7,5 +7,6 @@ data class Word(
     val stressIndex: Int,
     var memorizationLevel: Int,
     var isBought: String,
-    var isFavourite: String
+    var isFavourite: String,
+    var isChecked: Boolean = false
 )
