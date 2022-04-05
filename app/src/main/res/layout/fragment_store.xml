@@ -5,12 +5,11 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="21dp"
+    android:animateLayoutChanges="true"
     tools:context=".fragmentcode.StoreFragment">
 
     <!-- TODO: Update blank fragment layout -->
-    <include
-        android:id="@+id/store_search_ortho"
-        layout="@layout/search_ortho" />
+
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/store_tab_title"
@@ -23,32 +22,40 @@
         android:textColor="@color/black"
         android:textSize="36sp"
         android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="@id/store_search_ortho"
-        app:layout_constraintTop_toBottomOf="@+id/store_search_ortho" />
+        app:layout_constraintBottom_toTopOf="@+id/store_search_ortho"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+
+    <include
         android:id="@+id/available_letters"
+        layout="@layout/currency_counter"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="30sp"
-        android:paddingBottom="5sp"
-        android:text="@string/available_letters"
-        android:textColor="@color/black"
-        android:textSize="21sp"
-        app:layout_constraintBottom_toBottomOf="@+id/store_tab_title"
-        app:layout_constraintEnd_toEndOf="@id/store_search_ortho"
-        app:layout_constraintTop_toBottomOf="@+id/store_search_ortho" />
+        app:layout_constraintBottom_toBottomOf="@id/store_tab_title"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/store_tab_title"
+        app:layout_constraintVertical_bias="0.4" />
 
+    <include
+        android:id="@+id/store_search_ortho"
+        layout="@layout/search_ortho"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/store_tab_title" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/store_recycler"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:layout_marginTop="10dp"
         android:splitMotionEvents="false"
+        app:layout_constraintBottom_toTopOf="@id/addButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/store_tab_title"
-        app:layout_constraintBottom_toBottomOf="@id/addButton"
+        app:layout_constraintTop_toBottomOf="@+id/store_search_ortho"
         tools:listitem="@layout/word_item" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -56,9 +63,9 @@
         style="@style/Widget.MaterialComponents.Button.OutlinedButton"
         android:layout_width="55dp"
         android:layout_height="55dp"
-        android:padding="2dp"
         android:backgroundTint="#ECECEC"
         android:contentDescription="@string/it_s_a_button_to_add_words"
+        android:padding="2dp"
         android:src="@drawable/ic_add"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

@@ -1,9 +1,12 @@
 package com.example.orthoepy.fragmentcode
 
+import android.animation.LayoutTransition
+import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -37,10 +40,12 @@ class StoreFragment : Fragment() {
     ): View {
         // Inflate the layout for this fragment
         _binding = FragmentStoreBinding.inflate(inflater, container, false)
-
+        // Animation fix
+        binding.root.layoutTransition.enableTransitionType(LayoutTransition.CHANGING)
+        // Viewmodel setup
         viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
+        // UI Setup
         setUpUI()
-
 
         return binding.root
     }
@@ -52,23 +57,33 @@ class StoreFragment : Fragment() {
     }
 
     private fun setUpUI() {
+
+        fun changeCurrencyCounter(text: String) {
+            binding.availableLetters.currencyCv.findViewById<TextView>(R.id.available_letters_counter).text =
+                getString(R.string.available_letters, text)
+        }
+
         adapter = WordsStoreAdapter(object: WordsStoreActionListener{
             override fun wordStoreClick(word: Word) {
+                wordsToBuy.add(word)
                 if (letterCounter == 0)
                     binding.addButton.visibility = View.VISIBLE
                 letterCounter += word.wordText.length
-                wordsToBuy.add(word)
+                changeCurrencyCounter("$availableLetters - $letterCounter")
             }
 
             override fun wordStoreUnClick(word: Word) {
                 letterCounter -= word.wordText.length
-                if (letterCounter == 0)
+                changeCurrencyCounter("$availableLetters - $letterCounter")
+                if (letterCounter == 0) {
+                    changeCurrencyCounter("$availableLetters")
                     binding.addButton.visibility = View.GONE
+                }
                 wordsToBuy.remove(word)
             }
         })
         availableLetters = viewModel.getLetterCount()
-        binding.availableLetters.text = getString(R.string.available_letters, availableLetters)
+        changeCurrencyCounter(availableLetters.toString())
         binding.storeRecycler.layoutManager = LinearLayoutManager(activity)
         binding.storeRecycler.adapter = adapter
 
@@ -85,7 +100,7 @@ class StoreFragment : Fragment() {
                 }
                 wordsToBuy.clear()
                 letterCounter = 0
-                binding.availableLetters.text = getString(R.string.available_letters, availableLetters)
+                changeCurrencyCounter(availableLetters.toString())
             }
             else {
                 Toast.makeText(context, "Недостаточно букв", Toast.LENGTH_SHORT).show()
