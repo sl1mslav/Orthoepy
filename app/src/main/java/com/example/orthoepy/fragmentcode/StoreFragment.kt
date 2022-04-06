@@ -100,6 +100,7 @@ class StoreFragment : Fragment() {
                 }
                 wordsToBuy.clear()
                 letterCounter = 0
+                it.visibility = View.GONE
                 changeCurrencyCounter(availableLetters.toString())
             }
             else {

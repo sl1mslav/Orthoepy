@@ -47,28 +47,34 @@
         app:layout_constraintTop_toBottomOf="@id/store_tab_title" />
 
     <androidx.recyclerview.widget.RecyclerView
+        android:padding="5dp"
         android:id="@+id/store_recycler"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginTop="10dp"
         android:splitMotionEvents="false"
-        app:layout_constraintBottom_toTopOf="@id/addButton"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/store_search_ortho"
         tools:listitem="@layout/word_item" />
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
+    <ImageButton
         android:id="@+id/addButton"
-        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-        android:layout_width="55dp"
-        android:layout_height="55dp"
-        android:backgroundTint="#ECECEC"
-        android:contentDescription="@string/it_s_a_button_to_add_words"
-        android:padding="2dp"
+        android:layout_width="0dp"
+        android:background="@drawable/ovalbutton"
         android:src="@drawable/ic_add"
+        android:layout_height="45dp"
+        android:backgroundTint="#D1D0D0"
+        android:contentDescription="@string/it_s_a_button_to_add_words"
+        android:layout_marginHorizontal="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginBottom="20dp"
+        android:translationZ="10dp"
+
+
         app:maxImageSize="54dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
