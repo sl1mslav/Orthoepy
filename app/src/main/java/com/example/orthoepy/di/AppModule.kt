@@ -1,19 +1,34 @@
 package com.example.orthoepy.di
 
-import android.app.Application
 import android.content.Context
-/*import com.example.orthoepy.MainViewModelFactory*/
-import com.example.orthoepy.data.repository.DatastoreRepository
+import androidx.room.Room
+import com.example.orthoepy.data.database.DictionaryDao
+import com.example.orthoepy.data.database.DictionaryDatabase
 import dagger.Module
 import dagger.Provides
+import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
+import dagger.hilt.components.SingletonComponent
 import javax.inject.Singleton
+
+@InstallIn(SingletonComponent::class)
 @Module
-class AppModule(private val application: Application) {
+object AppModule {
 
     @Provides
     @Singleton
-    fun provideContext(): Context {
-        return application.applicationContext
+    fun provideAppDatabase(@ApplicationContext appContext: Context): DictionaryDatabase {
+        return Room.databaseBuilder(
+            appContext,
+            DictionaryDatabase::class.java,
+            "Dictionary"
+        ).createFromAsset("database/dictionary.db").build()
     }
+
+    @Provides
+    fun provideContext(@ApplicationContext appContext: Context) = appContext
+
+    @Provides
+    fun provideDictionaryDao(dictionaryDatabase: DictionaryDatabase): DictionaryDao = dictionaryDatabase.dictionaryDao()
 }
 

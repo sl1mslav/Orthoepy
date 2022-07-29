@@ -1,6 +1,5 @@
 package com.example.orthoepy.data.repository
 
-import androidx.lifecycle.LiveData
 import com.example.orthoepy.data.database.DictionaryDao
 import com.example.orthoepy.data.database.Word
 import kotlinx.coroutines.flow.Flow
@@ -10,12 +9,17 @@ class DictionaryRepository @Inject constructor(
     private val dictionaryDao: DictionaryDao
 ) {
 
-    var allWords: Flow<List<Word>> = dictionaryDao.getAll()
+    fun getAllWordsFromDB(): Flow<List<Word>> = dictionaryDao.getAll()
 
-    fun getWordById(id: Int): Flow<Word> = dictionaryDao.getWordById(id)
+    suspend fun getWordById(id: Int): Flow<Word> = dictionaryDao.getWordById(id)
 
-    var getNotBoughtWords = dictionaryDao.getNotBoughtWords()
+    fun getNotBoughtWords(): Flow<List<Word>> = dictionaryDao.getNotBoughtWords()
 
-    var getBoughtWords = dictionaryDao.getBoughtWords()
+    fun getBoughtWords(): Flow<List<Word>> = dictionaryDao.getBoughtWords()
 
+    suspend fun buyWordInDB(word: Word) = dictionaryDao.update(word.copy(isBought = "true"))
+
+    suspend fun markWordAsFavouriteInDB(word: Word) = dictionaryDao.update(word.copy(isFavourite = "true"))
+
+    suspend fun markWordAsNotFavouriteInDB(word: Word) = dictionaryDao.update(word.copy(isFavourite = "false"))
 }

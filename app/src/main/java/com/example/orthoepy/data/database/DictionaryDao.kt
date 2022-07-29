@@ -1,9 +1,9 @@
 package com.example.orthoepy.data.database
 
-import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Query
+import androidx.room.Update
 import kotlinx.coroutines.flow.Flow
 
 @Dao
@@ -20,6 +20,9 @@ interface DictionaryDao {
 
     @Query("SELECT * FROM dictionary WHERE isBought = 'true' ORDER BY wordText ASC")
     fun getBoughtWords(): Flow<List<Word>>
+
+    @Update
+    suspend fun update(word: Word)
 
     @Delete
     fun delete(word: Word)
