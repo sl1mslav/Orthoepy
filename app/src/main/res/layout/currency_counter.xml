@@ -11,6 +11,7 @@
     app:cardCornerRadius="30dp"
     app:layout_constraintStart_toStartOf="parent"
     app:layout_constraintTop_toTopOf="parent"
+    android:animateLayoutChanges="true"
     >
     <androidx.appcompat.widget.LinearLayoutCompat
 
