@@ -1,38 +1,34 @@
 package com.example.orthoepy.fragmentcode
 
 import android.animation.LayoutTransition
-import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.LayoutAnimationController
 import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.orthoepy.App
-import com.example.orthoepy.MainViewModel
 import com.example.orthoepy.R
-import com.example.orthoepy.adapters.WordsStoreActionListener
 import com.example.orthoepy.adapters.WordsStoreAdapter
+import com.example.orthoepy.data.database.Word
 import com.example.orthoepy.databinding.FragmentStoreBinding
-import com.example.orthoepy.wordsmodel.Word
-import com.example.orthoepy.wordsmodel.WordsStoreListener
-import com.example.orthoepy.wordsmodel.WordsStoreService
+import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 
+@AndroidEntryPoint
 class StoreFragment : Fragment() {
 
     private var _binding: FragmentStoreBinding? = null
     private val binding get() = _binding!!
-    private lateinit var viewModel: MainViewModel
 
-    private val wordsStoreService: WordsStoreService
-        get() = (requireActivity().application.applicationContext as App).wordsStoreService
-    private lateinit var adapter: WordsStoreAdapter
-    private val wordsToBuy: MutableList<Word> = mutableListOf()
-    private var availableLetters = 0
-    private var letterCounter = 0
+    private val wordAdapter = WordsStoreAdapter { onItemClick(it) }
+
+    private val viewModel: StoreViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -41,75 +37,83 @@ class StoreFragment : Fragment() {
         // Inflate the layout for this fragment
         _binding = FragmentStoreBinding.inflate(inflater, container, false)
         // Animation fix
-        binding.root.layoutTransition.enableTransitionType(LayoutTransition.CHANGING)
-        // Viewmodel setup
-        viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
-        // UI Setup
-        setUpUI()
-
+        binding.availableLetters.root.layoutTransition.enableTransitionType(LayoutTransition.CHANGING)
         return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        binding.storeRecycler.layoutManager = LinearLayoutManager(
+            requireContext(),
+            LinearLayoutManager.VERTICAL,
+            false
+        )
+        binding.storeRecycler.adapter = wordAdapter
+
+        binding.addButton.setOnClickListener {
+            viewModel.buyCheckedWords()
+        }
+
+        lifecycleScope.launchWhenCreated {
+            this.launch {
+                viewModel.notBoughtWords.collect {
+                    wordAdapter.submitList(it)
+                }
+            }
+            this.launch {
+                viewModel.dataPackage.collect {
+                    val collectedWords = it.first
+                    val collectedCurrency = it.second
+                    if (collectedWords.isEmpty()) {
+                        binding.addButton.alpha = 1f
+                        binding.addButton.animate().apply {
+                            duration = 300L
+                            alpha(0f)
+                            withEndAction {
+                                binding.addButton.visibility = View.GONE
+                            }
+                        }.start()
+                        changeCurrencyCounter("$collectedCurrency")
+                    }
+                    else {
+                        if (binding.addButton.visibility != View.VISIBLE) {
+                            binding.addButton.visibility = View.VISIBLE
+                            binding.addButton.alpha = 0f
+                            binding.addButton.animate().apply {
+                                duration = 300L
+                                alpha(1f)
+                            }.start()
+                        }
+                        changeCurrencyCounter("$collectedCurrency - ${collectedWords.sumOf { it.wordText.length }}")
+                    }
+                }
+            }
+        }
     }
 
     override fun onDestroy() {
         super.onDestroy()
-        wordsStoreService.removeListener(wordsStoreListener)
         _binding = null
     }
 
-    private fun setUpUI() {
-
-        fun changeCurrencyCounter(text: String) {
-            binding.availableLetters.currencyCv.findViewById<TextView>(R.id.available_letters_counter).text =
-                getString(R.string.available_letters, text)
-        }
-
-        adapter = WordsStoreAdapter(object: WordsStoreActionListener{
-            override fun wordStoreClick(word: Word) {
-                wordsToBuy.add(word)
-                if (letterCounter == 0)
-                    binding.addButton.visibility = View.VISIBLE
-                letterCounter += word.wordText.length
-                changeCurrencyCounter("$availableLetters - $letterCounter")
-            }
-
-            override fun wordStoreUnClick(word: Word) {
-                letterCounter -= word.wordText.length
-                changeCurrencyCounter("$availableLetters - $letterCounter")
-                if (letterCounter == 0) {
-                    changeCurrencyCounter("$availableLetters")
-                    binding.addButton.visibility = View.GONE
-                }
-                wordsToBuy.remove(word)
-            }
-        })
-        availableLetters = viewModel.getLetterCount()
-        changeCurrencyCounter(availableLetters.toString())
-        binding.storeRecycler.layoutManager = LinearLayoutManager(activity)
-        binding.storeRecycler.adapter = adapter
-
-        wordsStoreService.addListener(wordsStoreListener)
-
-        binding.addButton.visibility = View.GONE
-
-        binding.addButton.setOnClickListener {
-            if (letterCounter <= availableLetters) {
-                availableLetters -= letterCounter
-                viewModel.setLetterCount(availableLetters)
-                wordsToBuy.forEach {
-                    wordsStoreService.buyWord(it)
-                }
-                wordsToBuy.clear()
-                letterCounter = 0
-                it.visibility = View.GONE
-                changeCurrencyCounter(availableLetters.toString())
-            }
-            else {
-                Toast.makeText(context, "Недостаточно букв", Toast.LENGTH_SHORT).show()
-            }
+    // This function returns false only in the case of insufficient funds
+    private fun onItemClick(item: Word): Boolean {
+        return if (viewModel.dataPackage.value.first.contains(item)) {
+            viewModel.removeWordToBuy(item)
+            item.isChecked = "false"
+            true
+        } else if (!viewModel.addWordToBuy(item)) {
+            Toast.makeText(requireContext(), R.string.insufficient_funds, Toast.LENGTH_SHORT).show()
+            false
+        } else {
+            item.isChecked = "true"
+            true
         }
     }
 
-    private val wordsStoreListener: WordsStoreListener = {
-        adapter.wordsStore = it
+    private fun changeCurrencyCounter(text: String) {
+        binding.availableLetters.currencyCv.findViewById<TextView>(R.id.available_letters_counter).text =
+            getString(R.string.available_letters, text)
     }
 }
