@@ -1,23 +1,8 @@
 package com.example.orthoepy
 
 import android.app.Application
-import com.example.orthoepy.di.AppComponent
-import com.example.orthoepy.di.AppModule
-import com.example.orthoepy.di.DaggerAppComponent
-import com.example.orthoepy.wordsmodel.WordsStoreService
+import dagger.hilt.android.HiltAndroidApp
+import javax.inject.Inject
 
-class App: Application() {
-
-    private lateinit var appComponent: AppComponent
-    override fun onCreate() {
-        super.onCreate()
-        appComponent = DaggerAppComponent
-            .builder()
-            .appModule(AppModule(this))
-            .build()
-    }
-
-    fun getAppComponent(): AppComponent = appComponent
-
-    val wordsStoreService = WordsStoreService()
-}
+@HiltAndroidApp
+class App @Inject constructor(): Application()
