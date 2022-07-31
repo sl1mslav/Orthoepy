@@ -11,6 +11,7 @@ import javax.inject.Inject
 
 class DatastoreRepository @Inject constructor(private val context: Context) {
 
+    // TODO: Organize better interactions with the datastore
     private val Context.datastore by preferencesDataStore(name = "datastore")
 
     companion object {

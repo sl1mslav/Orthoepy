@@ -14,6 +14,9 @@ import com.google.android.material.tabs.TabLayoutMediator
 
 class DictionaryFragment : Fragment() {
 
+    // TODO: Attach a currency counter
+    // TODO: Expandable CardViews with the definitions of words (if possible)
+
     private var _binding: FragmentDictionaryBinding? = null
     private val binding get() = _binding!!
 

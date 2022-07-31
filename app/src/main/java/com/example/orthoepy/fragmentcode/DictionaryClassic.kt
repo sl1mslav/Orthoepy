@@ -15,6 +15,8 @@ import com.example.orthoepy.entity.WordCardColors
 
 class DictionaryClassic : Fragment() {
 
+    // TODO: setup a proper adapter for the fragment
+
     private var _binding: FragmentDictionaryClassicBinding? = null
     private val binding get() = _binding!!
 
@@ -32,6 +34,7 @@ class DictionaryClassic : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        // FIXME: implement proper animation within an adapter
         binding.testDictionaryItem.animatingButton.setOnClickListener {
             if (!flag) {
                 binding.testDictionaryItem.animatingButton.apply {

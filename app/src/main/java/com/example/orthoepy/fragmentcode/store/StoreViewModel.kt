@@ -16,6 +16,8 @@ class StoreViewModel @Inject constructor(
     private val datastoreRepository: DatastoreRepository
 ) : ViewModel() {
 
+    //TODO: find a way to get rif of getLetterCount()
+
     val boughtWords = repository.getBoughtWords()
 
     val notBoughtWords = repository.getNotBoughtWords().stateIn(
@@ -78,7 +80,7 @@ class StoreViewModel @Inject constructor(
             val queryTrimmed = query.trim()
             _notBoughtWordsByQuery.value = notBoughtWords.value.filter { word ->
                 queryTrimmed.length <= word.wordText.length &&
-                queryTrimmed in word.wordText.subSequence(0, queryTrimmed.length)
+                        queryTrimmed in word.wordText.subSequence(0, queryTrimmed.length)
             }
         }
     }

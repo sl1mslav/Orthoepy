@@ -9,6 +9,7 @@ import com.example.orthoepy.R
 
 class HomeFragment : Fragment() {
 
+    // TODO: Attach a currency counter
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?

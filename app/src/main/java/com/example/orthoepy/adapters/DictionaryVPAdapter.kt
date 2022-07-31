@@ -8,6 +8,7 @@ import com.example.orthoepy.fragmentcode.DictionaryPersonal
 
 class DictionaryVPAdapter(fragment: Fragment) : FragmentStateAdapter(fragment) {
 
+    // TODO: Consider using a ViewPager with the Navigation Component if possible
     private val TAB_TITLES = arrayOf(
         "Классика",
         "Экзамен",
