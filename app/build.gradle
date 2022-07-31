@@ -57,7 +57,7 @@ dependencies {
     // RecyclerView
     implementation 'androidx.recyclerview:recyclerview:1.2.1'
     //Room
-    def room_version = '2.4.2'
+    def room_version = '2.4.3'
 
     implementation "androidx.room:room-runtime:$room_version"
     implementation "androidx.room:room-ktx:$room_version"
@@ -65,5 +65,8 @@ dependencies {
     // Coroutines
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.1'
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.1'
+    // Lottie
+    implementation 'com.airbnb.android:lottie:5.2.0'
+
 
 }
