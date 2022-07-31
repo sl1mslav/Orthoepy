@@ -13,6 +13,7 @@
         <entry key="..\:/Orthoepy/Orthoepy/app/src/main/res/drawable/ic_add.xml" value="0.1775" />
         <entry key="..\:/Orthoepy/Orthoepy/app/src/main/res/drawable/ic_book.xml" value="0.1335" />
         <entry key="..\:/Orthoepy/Orthoepy/app/src/main/res/drawable/ic_currency.xml" value="0.2" />
+        <entry key="..\:/Orthoepy/Orthoepy/app/src/main/res/drawable/ic_favorite_fill0_wght400_grad0_opsz48.xml" value="0.2175" />
         <entry key="..\:/Orthoepy/Orthoepy/app/src/main/res/drawable/ic_home.xml" value="0.1335" />
         <entry key="..\:/Orthoepy/Orthoepy/app/src/main/res/drawable/ic_launcher_background.xml" value="0.1335" />
         <entry key="..\:/Orthoepy/Orthoepy/app/src/main/res/drawable/ic_newcurrency.xml" value="0.2145" />
@@ -22,6 +23,7 @@
         <entry key="..\:/Orthoepy/Orthoepy/app/src/main/res/drawable/ovalbutton.xml" value="0.197" />
         <entry key="..\:/Orthoepy/Orthoepy/app/src/main/res/layout/activity_main.xml" value="0.25" />
         <entry key="..\:/Orthoepy/Orthoepy/app/src/main/res/layout/currency_counter.xml" value="1.2" />
+        <entry key="..\:/Orthoepy/Orthoepy/app/src/main/res/layout/dictionary_word_item.xml" value="0.264" />
         <entry key="..\:/Orthoepy/Orthoepy/app/src/main/res/layout/fragment_dictionary.xml" value="0.264" />
         <entry key="..\:/Orthoepy/Orthoepy/app/src/main/res/layout/fragment_dictionary_classic.xml" value="0.25416666666666665" />
         <entry key="..\:/Orthoepy/Orthoepy/app/src/main/res/layout/fragment_dictionary_exam.xml" value="0.25416666666666665" />

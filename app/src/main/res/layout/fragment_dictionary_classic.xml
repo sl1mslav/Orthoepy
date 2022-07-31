@@ -5,10 +5,26 @@
     android:layout_height="match_parent"
     tools:context=".fragmentcode.DictionaryClassic">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <include
+        android:id="@+id/store_search_ortho"
+        layout="@layout/search_ortho"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="дарова ЕПТ)" />
+        android:layout_height="45dp"/>
+
+    <include
+        android:layout_marginTop="60dp"
+        android:id="@+id/test_dictionary_item"
+        layout="@layout/dictionary_word_item"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"/>
+
+<!--    <androidx.recyclerview.widget.RecyclerView-->
+<!--        android:id="@+id/store_recycler"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="match_parent"-->
+<!--        android:layout_marginTop="55dp"-->
+<!--        android:paddingTop="5dp"-->
+<!--        android:splitMotionEvents="false"-->
+<!--        tools:listitem="@layout/word_item" />-->
 
 </FrameLayout>

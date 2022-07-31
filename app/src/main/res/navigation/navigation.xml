@@ -17,7 +17,7 @@
         tools:layout="@layout/fragment_dictionary" />
     <fragment
         android:id="@+id/storeFragment"
-        android:name="com.example.orthoepy.fragmentcode.StoreFragment"
+        android:name="com.example.orthoepy.fragmentcode.store.StoreFragment"
         android:label="fragment_store"
         tools:layout="@layout/fragment_store" />
 </navigation>

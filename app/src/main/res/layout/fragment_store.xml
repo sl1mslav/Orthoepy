@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="21dp"
-    tools:context=".fragmentcode.StoreFragment">
+    tools:context=".fragmentcode.store.StoreFragment">
 
     <!-- TODO: Update blank fragment layout -->
 
@@ -46,11 +46,11 @@
         app:layout_constraintTop_toBottomOf="@id/store_tab_title" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:paddingTop="5dp"
         android:id="@+id/store_recycler"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginTop="10dp"
+        android:paddingTop="5dp"
         android:splitMotionEvents="false"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -61,17 +61,17 @@
     <ImageButton
         android:id="@+id/addButton"
         android:layout_width="0dp"
-        android:background="@drawable/ovalbutton"
-        android:src="@drawable/ic_add"
         android:layout_height="45dp"
+        android:layout_marginHorizontal="10dp"
+        android:layout_marginBottom="20dp"
+        android:background="@drawable/ovalbutton"
         android:backgroundTint="#D1D0D0"
         android:contentDescription="@string/it_s_a_button_to_add_words"
-        android:layout_marginHorizontal="10dp"
+        android:src="@drawable/ic_add"
+        android:translationZ="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginBottom="20dp"
-        android:translationZ="10dp"
         app:maxImageSize="54dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
