@@ -28,6 +28,7 @@
             app:tint="@color/gray_dark" />
 
         <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/search_bar"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="4dp"
