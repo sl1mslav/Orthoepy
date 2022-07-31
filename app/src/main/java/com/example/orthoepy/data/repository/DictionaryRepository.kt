@@ -1,7 +1,7 @@
 package com.example.orthoepy.data.repository
 
 import com.example.orthoepy.data.database.DictionaryDao
-import com.example.orthoepy.data.database.Word
+import com.example.orthoepy.entity.Word
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 

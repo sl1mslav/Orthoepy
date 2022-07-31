@@ -4,6 +4,7 @@ import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Query
 import androidx.room.Update
+import com.example.orthoepy.entity.Word
 import kotlinx.coroutines.flow.Flow
 
 @Dao

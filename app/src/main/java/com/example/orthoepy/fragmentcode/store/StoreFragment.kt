@@ -1,12 +1,10 @@
-package com.example.orthoepy.fragmentcode
+package com.example.orthoepy.fragmentcode.store
 
 import android.animation.LayoutTransition
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.animation.LayoutAnimationController
 import android.widget.TextView
 import android.widget.Toast
 import androidx.core.widget.addTextChangedListener
@@ -16,7 +14,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.orthoepy.R
 import com.example.orthoepy.adapters.WordsStoreAdapter
-import com.example.orthoepy.data.database.Word
+import com.example.orthoepy.entity.Word
 import com.example.orthoepy.databinding.FragmentStoreBinding
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch

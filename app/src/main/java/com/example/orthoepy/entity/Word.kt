@@ -1,4 +1,4 @@
-package com.example.orthoepy.data.database
+package com.example.orthoepy.entity
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity

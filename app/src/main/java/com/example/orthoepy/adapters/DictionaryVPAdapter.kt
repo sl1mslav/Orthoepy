@@ -5,7 +5,6 @@ import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.example.orthoepy.fragmentcode.DictionaryClassic
 import com.example.orthoepy.fragmentcode.DictionaryExam
 import com.example.orthoepy.fragmentcode.DictionaryPersonal
-import com.example.orthoepy.fragmentcode.StoreFragment
 
 class DictionaryVPAdapter(fragment: Fragment) : FragmentStateAdapter(fragment) {
 

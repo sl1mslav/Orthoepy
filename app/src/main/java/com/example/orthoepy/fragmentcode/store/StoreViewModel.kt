@@ -1,9 +1,8 @@
-package com.example.orthoepy.fragmentcode
+package com.example.orthoepy.fragmentcode.store
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.orthoepy.data.database.Word
+import com.example.orthoepy.entity.Word
 import com.example.orthoepy.data.repository.DatastoreRepository
 import com.example.orthoepy.data.repository.DictionaryRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
