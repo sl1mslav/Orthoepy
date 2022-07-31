@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import android.view.animation.LayoutAnimationController
 import android.widget.TextView
 import android.widget.Toast
+import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -55,10 +56,24 @@ class StoreFragment : Fragment() {
             viewModel.buyCheckedWords()
         }
 
+        binding.storeSearchOrtho.searchBar.addTextChangedListener {
+            viewModel.selectWordsByQuery(it.toString())
+        }
+
         lifecycleScope.launchWhenCreated {
             this.launch {
                 viewModel.notBoughtWords.collect {
                     wordAdapter.submitList(it)
+                }
+            }
+            this.launch {
+                viewModel.notBoughtWordsByQuery.collect {
+                    if (!binding.storeSearchOrtho.searchBar.text.isNullOrBlank()) {
+                        wordAdapter.submitList(it)
+                    }
+                    else {
+                        wordAdapter.submitList(viewModel.notBoughtWords.value)
+                    }
                 }
             }
             this.launch {
@@ -75,8 +90,7 @@ class StoreFragment : Fragment() {
                             }
                         }.start()
                         changeCurrencyCounter("$collectedCurrency")
-                    }
-                    else {
+                    } else {
                         if (binding.addButton.visibility != View.VISIBLE) {
                             binding.addButton.visibility = View.VISIBLE
                             binding.addButton.alpha = 0f

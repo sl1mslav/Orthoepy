@@ -1,5 +1,6 @@
 package com.example.orthoepy.fragmentcode
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.orthoepy.data.database.Word
@@ -8,7 +9,6 @@ import com.example.orthoepy.data.repository.DictionaryRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
 import javax.inject.Inject
 
 @HiltViewModel
@@ -24,13 +24,15 @@ class StoreViewModel @Inject constructor(
         started = SharingStarted.WhileSubscribed(),
         initialValue = emptyList()
     )
+    private val _notBoughtWordsByQuery = MutableStateFlow<List<Word>?>(null)
+    val notBoughtWordsByQuery = _notBoughtWordsByQuery
 
     private val wordsToBuy = MutableStateFlow<MutableList<Word>>(mutableListOf())
 
     private val availableLetters = MutableStateFlow<Int?>(null)
 
-    val dataPackage = wordsToBuy.combine(availableLetters) {
-        it1, it2 -> Pair(it1, it2)
+    val dataPackage = wordsToBuy.combine(availableLetters) { it1, it2 ->
+        Pair(it1, it2)
     }.stateIn(
         scope = viewModelScope,
         started = SharingStarted.WhileSubscribed(),
@@ -70,6 +72,16 @@ class StoreViewModel @Inject constructor(
 
     fun removeWordToBuy(word: Word) {
         wordsToBuy.update { (it - word).toMutableList() }
+    }
+
+    fun selectWordsByQuery(query: String) {
+        viewModelScope.launch {
+            val queryTrimmed = query.trim()
+            _notBoughtWordsByQuery.value = notBoughtWords.value.filter { word ->
+                queryTrimmed.length <= word.wordText.length &&
+                queryTrimmed in word.wordText.subSequence(0, queryTrimmed.length)
+            }
+        }
     }
 
     fun buyCheckedWords() {
