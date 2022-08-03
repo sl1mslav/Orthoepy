@@ -18,8 +18,6 @@ class StoreViewModel @Inject constructor(
 
     //TODO: find a way to get rif of getLetterCount()
 
-    val boughtWords = repository.getBoughtWords()
-
     val notBoughtWords = repository.getNotBoughtWords().stateIn(
         viewModelScope,
         started = SharingStarted.WhileSubscribed(),
@@ -47,13 +45,6 @@ class StoreViewModel @Inject constructor(
     private fun increaseLetterCount(amount: Int) {
         viewModelScope.launch {
             datastoreRepository.increaseLetterCount(amount)
-            getLetterCount()
-        }
-    }
-
-    fun setLetterCount(amount: Int) {
-        viewModelScope.launch {
-            datastoreRepository.setLetterCount(amount)
             getLetterCount()
         }
     }
