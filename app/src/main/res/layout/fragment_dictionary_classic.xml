@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragmentcode.DictionaryClassic">
+    tools:context=".fragmentcode.dictionary.DictionaryClassic">
 
     <include
         android:id="@+id/store_search_ortho"
