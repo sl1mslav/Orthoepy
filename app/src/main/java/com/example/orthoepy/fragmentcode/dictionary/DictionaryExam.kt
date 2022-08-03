@@ -1,4 +1,4 @@
-package com.example.orthoepy.fragmentcode
+package com.example.orthoepy.fragmentcode.dictionary
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment

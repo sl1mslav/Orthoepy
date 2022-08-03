@@ -1,6 +1,5 @@
-package com.example.orthoepy.fragmentcode
+package com.example.orthoepy.fragmentcode.dictionary
 
-import android.graphics.Color
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -9,8 +8,6 @@ import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import com.example.orthoepy.R
 import com.example.orthoepy.databinding.FragmentDictionaryClassicBinding
-import com.example.orthoepy.databinding.FragmentStoreBinding
-import com.example.orthoepy.entity.WordCardColors
 
 
 class DictionaryClassic : Fragment() {
@@ -25,7 +22,7 @@ class DictionaryClassic : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         // Inflate the layout for this fragment
         _binding = FragmentDictionaryClassicBinding.inflate(inflater, container, false)
         return binding.root
@@ -38,15 +35,19 @@ class DictionaryClassic : Fragment() {
         binding.testDictionaryItem.animatingButton.setOnClickListener {
             if (!flag) {
                 binding.testDictionaryItem.animatingButton.apply {
-                    speed = 4f
+                    setMinAndMaxFrame(0, 20)
+                    speed = 2f
                     playAnimation()
+                    binding.testDictionaryItem.animatingButtonFrame.visibility = View.GONE
                     flag = true
                 }
             }
             else {
                 binding.testDictionaryItem.animatingButton.apply {
-                    speed = -4f
+                    setMinAndMaxFrame(0, 20)
+                    speed = -2f
                     playAnimation()
+                    binding.testDictionaryItem.animatingButtonFrame.visibility = View.VISIBLE
                     flag = false
                 }
             }
