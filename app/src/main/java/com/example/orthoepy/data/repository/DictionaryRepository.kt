@@ -19,7 +19,9 @@ class DictionaryRepository @Inject constructor(
 
     suspend fun buyWordInDB(word: Word) = dictionaryDao.update(word.copy(isBought = "true"))
 
-    suspend fun markWordAsFavouriteInDB(word: Word) = dictionaryDao.update(word.copy(isFavourite = "true"))
+    suspend fun markWordAsFavouriteInDB(word: Word) =
+        dictionaryDao.update(word.copy(isFavourite = "true"))
 
-    suspend fun markWordAsNotFavouriteInDB(word: Word) = dictionaryDao.update(word.copy(isFavourite = "false"))
+    suspend fun unmarkWordAsFavouriteInDB(word: Word) =
+        dictionaryDao.update(word.copy(isFavourite = "false"))
 }
