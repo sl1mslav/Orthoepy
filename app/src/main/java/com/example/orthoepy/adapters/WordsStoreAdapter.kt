@@ -10,7 +10,9 @@ import com.example.orthoepy.databinding.WordItemBinding
 
 class WordsStoreAdapter(
     val onClick: (Word) -> Boolean
-): ListAdapter<Word, WordsStoreViewHolder>(DiffUtilCallback()) {
+): ListAdapter<Word, WordsStoreAdapter.WordsStoreViewHolder>(DiffUtilCallback) {
+
+    inner class WordsStoreViewHolder(val binding: WordItemBinding) : RecyclerView.ViewHolder(binding.root)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): WordsStoreViewHolder {
         val inflater = LayoutInflater.from(parent.context)
@@ -41,10 +43,9 @@ class WordsStoreAdapter(
         }
     }
 }
-class DiffUtilCallback : DiffUtil.ItemCallback<Word>() {
+object DiffUtilCallback : DiffUtil.ItemCallback<Word>() {
     override fun areContentsTheSame(oldItem: Word, newItem: Word): Boolean = oldItem == newItem
     override fun areItemsTheSame(oldItem: Word, newItem: Word): Boolean =
         oldItem.id == newItem.id
 }
 
-class WordsStoreViewHolder(val binding: WordItemBinding) : RecyclerView.ViewHolder(binding.root)
