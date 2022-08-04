@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.orthoepy.entity.Word
 import com.example.orthoepy.data.repository.DatastoreRepository
 import com.example.orthoepy.data.repository.DictionaryRepository
+import com.example.orthoepy.entity.UserPreferences
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
@@ -16,19 +17,21 @@ class StoreViewModel @Inject constructor(
     private val datastoreRepository: DatastoreRepository
 ) : ViewModel() {
 
-    //TODO: find a way to get rif of getLetterCount()
-
     val notBoughtWords = repository.getNotBoughtWords().stateIn(
         viewModelScope,
         started = SharingStarted.WhileSubscribed(),
         initialValue = emptyList()
     )
+    private val availableLetters = datastoreRepository.preferencesFlow.stateIn(
+        viewModelScope,
+        started = SharingStarted.WhileSubscribed(),
+        initialValue = null
+    )
+
     private val _notBoughtWordsByQuery = MutableStateFlow<List<Word>?>(null)
-    val notBoughtWordsByQuery = _notBoughtWordsByQuery
+    val notBoughtWordsByQuery = _notBoughtWordsByQuery.asStateFlow()
 
     private val wordsToBuy = MutableStateFlow<MutableList<Word>>(mutableListOf())
-
-    private val availableLetters = MutableStateFlow<Int?>(null)
 
     val dataPackage = wordsToBuy.combine(availableLetters) { it1, it2 ->
         Pair(it1, it2)
@@ -38,25 +41,14 @@ class StoreViewModel @Inject constructor(
         initialValue = Pair(wordsToBuy.value, availableLetters.value)
     )
 
-    init {
-        getLetterCount()
-    }
-
     private fun increaseLetterCount(amount: Int) {
         viewModelScope.launch {
             datastoreRepository.increaseLetterCount(amount)
-            getLetterCount()
-        }
-    }
-
-    private fun getLetterCount() {
-        viewModelScope.launch {
-            availableLetters.value = datastoreRepository.getLetterCount()
         }
     }
 
     fun addWordToBuy(word: Word): Boolean {
-        return if (wordsToBuy.value.sumOf { it.wordText.length } + word.wordText.length <= availableLetters.value!!) {
+        return if (wordsToBuy.value.sumOf { it.wordText.length } + word.wordText.length <= availableLetters.value!!.currencyAmount) {
             wordsToBuy.update { (it + word).toMutableList() }
             true
         } else false
@@ -76,6 +68,11 @@ class StoreViewModel @Inject constructor(
         }
     }
 
+    fun clearCheckedWords() {
+        viewModelScope.launch {
+            wordsToBuy.value = mutableListOf()
+        }
+    }
     fun buyCheckedWords() {
         viewModelScope.launch {
             wordsToBuy.value.forEach {
@@ -83,7 +80,6 @@ class StoreViewModel @Inject constructor(
             }
             increaseLetterCount(-(wordsToBuy.value.sumOf { it.wordText.length }))
             wordsToBuy.value = mutableListOf()
-            getLetterCount()
         }
     }
 }
