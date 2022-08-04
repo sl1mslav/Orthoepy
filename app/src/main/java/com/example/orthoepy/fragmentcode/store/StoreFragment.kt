@@ -2,6 +2,7 @@ package com.example.orthoepy.fragmentcode.store
 
 import android.animation.LayoutTransition
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,15 +15,17 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.orthoepy.BaseFragment
 import com.example.orthoepy.R
 import com.example.orthoepy.adapters.WordsStoreAdapter
 import com.example.orthoepy.entity.Word
 import com.example.orthoepy.databinding.FragmentStoreBinding
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class StoreFragment : Fragment() {
+class StoreFragment : BaseFragment() {
 
     private var _binding: FragmentStoreBinding? = null
     private val binding get() = _binding!!
@@ -44,7 +47,6 @@ class StoreFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         binding.storeRecycler.layoutManager = LinearLayoutManager(
             requireContext(),
             LinearLayoutManager.VERTICAL,
@@ -64,6 +66,7 @@ class StoreFragment : Fragment() {
 
     override fun onDestroy() {
         super.onDestroy()
+        viewModel.clearCheckedWords()
         _binding = null
     }
 
@@ -87,51 +90,50 @@ class StoreFragment : Fragment() {
             getString(R.string.available_letters, text)
     }
 
+    private fun animateButton(toDisappear: Boolean) {
+        if (toDisappear && binding.addButton.visibility == View.VISIBLE) {
+            binding.addButton.animate().apply {
+                duration = 300L
+                alpha(0f)
+                withEndAction {
+                    binding.addButton.visibility = View.GONE
+                }
+            }.start()
+        } else if (!toDisappear && binding.addButton.visibility != View.VISIBLE) {
+            binding.addButton.visibility = View.VISIBLE
+            binding.addButton.alpha = 0f
+            binding.addButton.animate().apply {
+                duration = 300L
+                alpha(1f)
+            }.start()
+        }
+    }
     private fun initRecyclerUpdates() {
-        lifecycleScope.launch {
-            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                this.launch {
-                    viewModel.notBoughtWords.collect {
-                        wordAdapter.submitList(it)
-                    }
+        launchFlow {
+            viewModel.notBoughtWords.collect {
+                wordAdapter.submitList(it)
+            }
+        }
+        launchFlow {
+            viewModel.notBoughtWordsByQuery.collect {
+                if (!binding.storeSearchOrtho.searchBar.text.isNullOrBlank()) {
+                    wordAdapter.submitList(it)
+                } else {
+                    wordAdapter.submitList(viewModel.notBoughtWords.value)
                 }
-                this.launch {
-                    viewModel.notBoughtWordsByQuery.collect {
-                        if (!binding.storeSearchOrtho.searchBar.text.isNullOrBlank()) {
-                            wordAdapter.submitList(it)
-                        }
-                        else {
-                            wordAdapter.submitList(viewModel.notBoughtWords.value)
-                        }
-                    }
+            }
+        }
+        launchFlow {
+            viewModel.dataPackage.collect {
+                Log.d("sus", "${it.first.size}, ${it.second?.currencyAmount}")
+                val collectedWords = it.first
+                val collectedCurrency = it.second?.currencyAmount
+                if (collectedWords.isEmpty()) {
+                    changeCurrencyCounter("$collectedCurrency")
+                } else {
+                    changeCurrencyCounter("$collectedCurrency - ${collectedWords.sumOf { it.wordText.length }}")
                 }
-                this.launch {
-                    viewModel.dataPackage.collect {
-                        val collectedWords = it.first
-                        val collectedCurrency = it.second
-                        if (collectedWords.isEmpty()) {
-                            binding.addButton.alpha = 1f
-                            binding.addButton.animate().apply {
-                                duration = 300L
-                                alpha(0f)
-                                withEndAction {
-                                    binding.addButton.visibility = View.GONE
-                                }
-                            }.start()
-                            changeCurrencyCounter("$collectedCurrency")
-                        } else {
-                            if (binding.addButton.visibility != View.VISIBLE) {
-                                binding.addButton.visibility = View.VISIBLE
-                                binding.addButton.alpha = 0f
-                                binding.addButton.animate().apply {
-                                    duration = 300L
-                                    alpha(1f)
-                                }.start()
-                            }
-                            changeCurrencyCounter("$collectedCurrency - ${collectedWords.sumOf { it.wordText.length }}")
-                        }
-                    }
-                }
+                animateButton(collectedWords.isEmpty())
             }
         }
     }
