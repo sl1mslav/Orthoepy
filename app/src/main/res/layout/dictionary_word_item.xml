@@ -38,35 +38,25 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <com.airbnb.lottie.LottieAnimationView
-            app:lottie_colorFilter="@color/heart_pink"
             android:id="@+id/animating_button"
-            android:scaleType="centerInside"
             android:layout_width="60dp"
             android:layout_height="60dp"
-            app:lottie_rawRes="@raw/like"
+            android:scaleType="centerInside"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:lottie_colorFilter="@color/heart_pink"
+            app:lottie_rawRes="@raw/like" />
 
         <com.airbnb.lottie.LottieAnimationView
             android:id="@+id/animating_button_frame"
-            android:scaleType="centerInside"
             android:layout_width="60dp"
             android:layout_height="60dp"
-            app:lottie_rawRes="@raw/like"
+            android:scaleType="centerInside"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"/>
-
-<!--        <com.airbnb.lottie.LottieAnimationView-->
-<!--            android:id="@+id/animating_button"-->
-<!--            android:scaleType="centerInside"-->
-<!--            android:layout_width="60dp"-->
-<!--            android:layout_height="60dp"-->
-<!--            app:lottie_rawRes="@raw/favourite"-->
-<!--            app:layout_constraintBottom_toBottomOf="parent"-->
-<!--            app:layout_constraintEnd_toEndOf="parent"-->
-<!--            app:layout_constraintTop_toTopOf="parent"/>-->
+            app:layout_constraintTop_toTopOf="parent"
+            app:lottie_rawRes="@raw/like" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.cardview.widget.CardView>
