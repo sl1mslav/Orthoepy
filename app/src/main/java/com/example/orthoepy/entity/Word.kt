@@ -23,7 +23,7 @@ data class Word(
     @ColumnInfo(name = "isExamWord")
     val isExamWord: String,
     @ColumnInfo(name = "isFavourite")
-    val isFavourite: String,
+    var isFavourite: String,
     @ColumnInfo(name = "isChecked")
     var isChecked: String,
     @ColumnInfo(name = "isDefault")
