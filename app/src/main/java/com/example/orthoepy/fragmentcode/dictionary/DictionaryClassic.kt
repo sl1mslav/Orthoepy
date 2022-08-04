@@ -1,23 +1,35 @@
 package com.example.orthoepy.fragmentcode.dictionary
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.orthoepy.BaseFragment
 import com.example.orthoepy.R
+import com.example.orthoepy.adapters.WordsDictionaryAdapter
 import com.example.orthoepy.databinding.FragmentDictionaryClassicBinding
+import com.example.orthoepy.entity.Word
+import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 
-
-class DictionaryClassic : Fragment() {
-
-    // TODO: setup a proper adapter for the fragment
+@AndroidEntryPoint
+class DictionaryClassic : BaseFragment() {
 
     private var _binding: FragmentDictionaryClassicBinding? = null
     private val binding get() = _binding!!
 
-    var flag = false
+    val dictionaryAdapter = WordsDictionaryAdapter { viewModel.markWord(it) }
+
+    private val viewModel: DictionaryViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -31,29 +43,24 @@ class DictionaryClassic : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // FIXME: implement proper animation within an adapter
-        binding.testDictionaryItem.animatingButton.setOnClickListener {
-            if (!flag) {
-                binding.testDictionaryItem.animatingButton.apply {
-                    setMinAndMaxFrame(0, 20)
-                    speed = 2f
-                    playAnimation()
-                    binding.testDictionaryItem.animatingButtonFrame.visibility = View.GONE
-                    flag = true
-                }
-            }
-            else {
-                binding.testDictionaryItem.animatingButton.apply {
-                    setMinAndMaxFrame(0, 20)
-                    speed = -2f
-                    playAnimation()
-                    binding.testDictionaryItem.animatingButtonFrame.visibility = View.VISIBLE
-                    flag = false
-                }
+
+        binding.dictionaryRecycler.layoutManager = LinearLayoutManager(
+            requireContext(),
+            LinearLayoutManager.VERTICAL,
+            false
+        )
+        binding.dictionaryRecycler.adapter = dictionaryAdapter
+
+        initCollectors()
+    }
+
+    private fun initCollectors() {
+        launchFlow {
+            viewModel.boughtWords.collect {
+                Log.d("tag", "submitting list")
+                dictionaryAdapter.submitList(it)
             }
         }
-
-        binding.testDictionaryItem.marker.setCardBackgroundColor(ContextCompat.getColor(requireContext(), R.color.pink))
     }
 
     companion object {
