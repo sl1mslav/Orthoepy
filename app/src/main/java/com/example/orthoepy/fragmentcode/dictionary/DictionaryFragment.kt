@@ -1,24 +1,34 @@
 package com.example.orthoepy.fragmentcode.dictionary
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.widget.addTextChangedListener
+import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
+import androidx.viewpager2.widget.ViewPager2
+import com.example.orthoepy.BaseFragment
 import com.example.orthoepy.R
 import com.example.orthoepy.adapters.DictionaryVPAdapter
 import com.example.orthoepy.databinding.FragmentDictionaryBinding
 import com.example.orthoepy.databinding.FragmentStoreBinding
 import com.google.android.material.tabs.TabLayoutMediator
+import dagger.hilt.android.AndroidEntryPoint
 
-
-class DictionaryFragment : Fragment() {
+@AndroidEntryPoint
+class DictionaryFragment : BaseFragment() {
 
     // TODO: Attach a currency counter
     // TODO: Expandable CardViews with the definitions of words (if possible)
 
     private var _binding: FragmentDictionaryBinding? = null
     private val binding get() = _binding!!
+
+    private val viewModel: DictionaryViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -35,10 +45,37 @@ class DictionaryFragment : Fragment() {
         val adapter = DictionaryVPAdapter(this)
         dictionaryVp.adapter = adapter
 
-        TabLayoutMediator(binding.dictionaryTabs, dictionaryVp) {
-            tab, position ->
+        TabLayoutMediator(binding.dictionaryTabs, dictionaryVp) { tab, position ->
             tab.text = adapter.getTitle(position)
         }.attach()
+
+        dictionaryVp.registerOnPageChangeCallback(
+            object : ViewPager2.OnPageChangeCallback() {
+                override fun onPageSelected(position: Int) {
+                    super.onPageSelected(position)
+                    // TODO: move this to a function
+                    when (position) {
+                        0 -> {
+                            val dictionaryClassic =
+                                dictionaryVp.getCurrentFragment(childFragmentManager) as DictionaryClassic
+                            dictionaryClassic.launchFlow {
+                                Log.d("tag", "flow launched")
+                                viewModel.boughtWordsByQuery.collect {
+                                    if (!binding.storeSearchOrtho.searchBar.text.isNullOrBlank()) {
+                                        dictionaryClassic.dictionaryAdapter.submitList(it)
+                                    } else {
+                                        dictionaryClassic.dictionaryAdapter.submitList(viewModel.boughtWords.value)
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        )
+        binding.storeSearchOrtho.searchBar.addTextChangedListener {
+            viewModel.selectWordsByQuery(it.toString())
+        }
     }
 
     override fun onDestroy() {
