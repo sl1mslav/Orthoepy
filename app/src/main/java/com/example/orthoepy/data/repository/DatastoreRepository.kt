@@ -2,30 +2,34 @@ package com.example.orthoepy.data.repository
 
 import android.content.Context
 import android.util.Log
+import androidx.datastore.dataStore
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.intPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
+import com.example.orthoepy.entity.UserPreferences
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
 class DatastoreRepository @Inject constructor(private val context: Context) {
 
-    // TODO: Organize better interactions with the datastore
     private val Context.datastore by preferencesDataStore(name = "datastore")
 
-    companion object {
+    private companion object {
         val letterCountKey = intPreferencesKey("LETTER_COUNT")
+        const val DEFAULT_CURRENCY_AMOUNT = 100
     }
 
     suspend fun increaseLetterCount(letterCount: Int) {
         context.datastore.edit { counter ->
-            val currentCounterValue = counter[letterCountKey] ?: 0
+            val currentCounterValue = counter[letterCountKey] ?: DEFAULT_CURRENCY_AMOUNT
             counter[letterCountKey] = currentCounterValue + letterCount
         }
     }
 
-    suspend fun setLetterCount(letterCount: Int) {
+    private suspend fun setLetterCount(letterCount: Int) {
         context.datastore.updateData { counter ->
             counter.toMutablePreferences().apply {
                 this[letterCountKey] = letterCount
@@ -33,11 +37,8 @@ class DatastoreRepository @Inject constructor(private val context: Context) {
         }
     }
 
-    suspend fun getLetterCount(): Int {
-        val preferences = context.datastore.data.first()
-        if (preferences[letterCountKey] == null) {
-            setLetterCount(111)
-        }
-        return preferences[letterCountKey] ?: 111
+    val preferencesFlow: Flow<UserPreferences> = context.datastore.data.map { preferences ->
+        val currencyAmount = preferences[letterCountKey] ?: DEFAULT_CURRENCY_AMOUNT
+        UserPreferences(currencyAmount)
     }
 }
