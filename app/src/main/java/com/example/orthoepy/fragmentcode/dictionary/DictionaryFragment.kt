@@ -2,20 +2,15 @@ package com.example.orthoepy.fragmentcode.dictionary
 
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.viewModels
-import androidx.lifecycle.lifecycleScope
 import androidx.viewpager2.widget.ViewPager2
 import com.example.orthoepy.BaseFragment
-import com.example.orthoepy.R
 import com.example.orthoepy.adapters.DictionaryVPAdapter
 import com.example.orthoepy.databinding.FragmentDictionaryBinding
-import com.example.orthoepy.databinding.FragmentStoreBinding
 import com.google.android.material.tabs.TabLayoutMediator
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -56,18 +51,7 @@ class DictionaryFragment : BaseFragment() {
                     // TODO: move this to a function
                     when (position) {
                         0 -> {
-                            val dictionaryClassic =
-                                dictionaryVp.getCurrentFragment(childFragmentManager) as DictionaryClassic
-                            dictionaryClassic.launchFlow {
-                                Log.d("tag", "flow launched")
-                                viewModel.boughtWordsByQuery.collect {
-                                    if (!binding.storeSearchOrtho.searchBar.text.isNullOrBlank()) {
-                                        dictionaryClassic.dictionaryAdapter.submitList(it)
-                                    } else {
-                                        dictionaryClassic.dictionaryAdapter.submitList(viewModel.boughtWords.value)
-                                    }
-                                }
-                            }
+                            initDictClassicCollectors(dictionaryVp)
                         }
                     }
                 }
@@ -75,6 +59,21 @@ class DictionaryFragment : BaseFragment() {
         )
         binding.storeSearchOrtho.searchBar.addTextChangedListener {
             viewModel.selectWordsByQuery(it.toString())
+        }
+    }
+
+    private fun initDictClassicCollectors(pager: ViewPager2) {
+        val dictionaryClassic =
+            pager.getCurrentFragment(childFragmentManager) as DictionaryClassic
+        dictionaryClassic.launchFlow {
+            Log.d("tag", "launching flow")
+            viewModel.boughtWordsByQuery.collect {
+                if (!binding.storeSearchOrtho.searchBar.text.isNullOrBlank()) {
+                    dictionaryClassic.dictionaryAdapter.submitList(it)
+                } else {
+                    dictionaryClassic.dictionaryAdapter.submitList(viewModel.boughtWords.value)
+                }
+            }
         }
     }
 
