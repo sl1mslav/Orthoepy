@@ -57,7 +57,6 @@ class DictionaryClassic : BaseFragment() {
     private fun initCollectors() {
         launchFlow {
             viewModel.boughtWords.collect {
-                Log.d("tag", "submitting list")
                 dictionaryAdapter.submitList(it)
             }
         }
