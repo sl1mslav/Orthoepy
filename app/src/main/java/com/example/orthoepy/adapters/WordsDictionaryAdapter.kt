@@ -29,8 +29,7 @@ class WordsDictionaryAdapter(
     }
 
     override fun onBindViewHolder(holder: WordsDictionaryViewHolder, position: Int) {
-        val wordDictionary = getItem(position)
-        bind(holder.binding, wordDictionary)
+        bind(holder.binding, getItem(position))
     }
 
     private fun bind(binding: DictionaryWordItemBinding, word: Word) {
