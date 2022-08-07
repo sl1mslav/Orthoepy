@@ -22,6 +22,12 @@ interface DictionaryDao {
     @Query("SELECT * FROM dictionary WHERE isBought = 'true' ORDER BY wordText ASC")
     fun getBoughtWords(): Flow<List<Word>>
 
+    @Query("SELECT * FROM dictionary WHERE isFavourite = 'true' ORDER BY wordText ASC")
+    fun getFavouriteWords() : Flow<List<Word>>
+
+    @Query("SELECT * FROM dictionary WHERE isExamWord = 'true' ORDER BY wordText ASC")
+    fun getExamWords() : Flow<List<Word>>
+
     @Update
     suspend fun update(word: Word)
 
