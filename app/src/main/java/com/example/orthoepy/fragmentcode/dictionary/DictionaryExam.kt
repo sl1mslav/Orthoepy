@@ -5,17 +5,54 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.activityViewModels
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.orthoepy.BaseFragment
 import com.example.orthoepy.R
+import com.example.orthoepy.adapters.WordsDictionaryAdapter
+import com.example.orthoepy.databinding.FragmentDictionaryClassicBinding
+import com.example.orthoepy.databinding.FragmentDictionaryExamBinding
 
 
-class DictionaryExam : Fragment() {
+class DictionaryExam : BaseFragment() {
+
+    private var _binding: FragmentDictionaryExamBinding? = null
+    private val binding get() = _binding!!
+
+    val dictionaryAdapter = WordsDictionaryAdapter { viewModel.markWord(it) }
+
+    private val viewModel: DictionaryViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_dictionary_exam, container, false)
+        _binding = FragmentDictionaryExamBinding.inflate(inflater, container, false)
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+
+        binding.dictionaryRecycler.layoutManager = LinearLayoutManager(
+            requireContext(),
+            LinearLayoutManager.VERTICAL,
+            false
+        )
+        binding.dictionaryRecycler.adapter = dictionaryAdapter
+
+        launchFlow {
+            viewModel.examWords.collect {
+                dictionaryAdapter.submitList(it)
+            }
+        }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        _binding = null
     }
 
     companion object {

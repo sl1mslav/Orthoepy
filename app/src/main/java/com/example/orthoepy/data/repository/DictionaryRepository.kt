@@ -17,6 +17,10 @@ class DictionaryRepository @Inject constructor(
 
     fun getBoughtWords(): Flow<List<Word>> = dictionaryDao.getBoughtWords()
 
+    fun getFavouriteWords(): Flow<List<Word>> = dictionaryDao.getFavouriteWords()
+
+    fun getExamWords(): Flow<List<Word>> = dictionaryDao.getExamWords()
+
     suspend fun buyWordInDB(word: Word) = dictionaryDao.update(word.copy(isBought = "true"))
 
     suspend fun markWordAsFavouriteInDB(word: Word) =

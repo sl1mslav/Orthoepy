@@ -51,15 +51,16 @@ class DictionaryClassic : BaseFragment() {
         )
         binding.dictionaryRecycler.adapter = dictionaryAdapter
 
-        initCollectors()
-    }
-
-    private fun initCollectors() {
         launchFlow {
             viewModel.boughtWords.collect {
                 dictionaryAdapter.submitList(it)
             }
         }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        _binding = null
     }
 
     companion object {
