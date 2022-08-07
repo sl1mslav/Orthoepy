@@ -115,6 +115,7 @@ class StoreFragment : BaseFragment() {
             }
         }
         launchFlow {
+            // TODO: separate stateflows query logic is unnecessary. Look into removing it.
             viewModel.notBoughtWordsByQuery.collect {
                 if (!binding.storeSearchOrtho.searchBar.text.isNullOrBlank()) {
                     wordAdapter.submitList(it)
@@ -125,7 +126,6 @@ class StoreFragment : BaseFragment() {
         }
         launchFlow {
             viewModel.dataPackage.collect {
-                Log.d("sus", "${it.first.size}, ${it.second?.currencyAmount}")
                 val collectedWords = it.first
                 val collectedCurrency = it.second?.currencyAmount
                 if (collectedWords.isEmpty()) {

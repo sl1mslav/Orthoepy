@@ -24,6 +24,7 @@ class WordsStoreAdapter(
     override fun onBindViewHolder(holder: WordsStoreViewHolder, position: Int) {
         val wordStore = getItem(position)
         with(holder.binding) {
+            // TODO: look into removing database isChecked check by using id comparisons
             wordInList.text = wordStore.wordText
             checkbox.isChecked = wordStore.isChecked.toBoolean()
             root.setOnClickListener {
