@@ -5,14 +5,18 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.example.orthoepy.entity.Word
 import com.example.orthoepy.databinding.WordItemBinding
+import com.example.orthoepy.entity.Word
 
 class WordsStoreAdapter(
     val onClick: (Word) -> Boolean
-): ListAdapter<Word, WordsStoreAdapter.WordsStoreViewHolder>(DiffUtilCallback) {
+) : ListAdapter<Word, WordsStoreAdapter.WordsStoreViewHolder>(DiffUtilCallback) {
 
-    inner class WordsStoreViewHolder(val binding: WordItemBinding) : RecyclerView.ViewHolder(binding.root)
+    // TODO: Update the onClick logic akin to DictionaryAdapter;
+    //  right now, multiple clickListeners are set to a single holder.
+
+    inner class WordsStoreViewHolder(val binding: WordItemBinding) :
+        RecyclerView.ViewHolder(binding.root)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): WordsStoreViewHolder {
         val inflater = LayoutInflater.from(parent.context)
@@ -44,6 +48,7 @@ class WordsStoreAdapter(
         }
     }
 }
+
 object DiffUtilCallback : DiffUtil.ItemCallback<Word>() {
     override fun areContentsTheSame(oldItem: Word, newItem: Word): Boolean = oldItem == newItem
     override fun areItemsTheSame(oldItem: Word, newItem: Word): Boolean =
