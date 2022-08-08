@@ -1,10 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- TODO: update the padding and spacing
+      to make the layout identical to other fragments-->
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:padding="10dp"
     tools:context=".fragmentcode.home.HomeFragment">
 
 
@@ -21,16 +24,15 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/letters"
+    <include
+        android:id="@+id/available_letters"
+        layout="@layout/currency_counter"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
-        android:text="@string/available_letters"
-        android:textColor="#000000"
-        android:textSize="20sp"
-        app:layout_constraintBaseline_toBaselineOf="@id/orthoepy"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintBottom_toBottomOf="@id/orthoepy"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/orthoepy"
+        app:layout_constraintVertical_bias="0.5" />
 
     <androidx.cardview.widget.CardView
         android:id="@+id/statistics_cv"
@@ -99,7 +101,7 @@
         android:id="@+id/exam_ege_cv"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        app:descriptionText="Варианты по норма единого государственного экзамена по русскому языку"
+        app:descriptionText="Варианты по норме единого государственного экзамена по русскому языку"
         app:icon="@drawable/ic_home"
         app:labelText="ЕГЭ"
         app:layout_constraintStart_toStartOf="@+id/exams_tv"
@@ -110,7 +112,7 @@
         android:id="@+id/exam_zno_cv"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        app:descriptionText="Варианты по норма внешнего независимого оценивания по украинскому языку"
+        app:descriptionText="Варианты по норме внешнего независимого оценивания по украинскому языку"
         app:icon="@drawable/ic_home"
         app:labelText="ЗНО"
         app:layout_constraintStart_toStartOf="@+id/exam_ege_cv"
