@@ -2,10 +2,9 @@ package com.example.orthoepy.fragmentcode.store
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.orthoepy.entity.Word
 import com.example.orthoepy.data.repository.DatastoreRepository
 import com.example.orthoepy.data.repository.DictionaryRepository
-import com.example.orthoepy.entity.UserPreferences
+import com.example.orthoepy.entity.Word
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
@@ -60,10 +59,10 @@ class StoreViewModel @Inject constructor(
 
     fun selectWordsByQuery(query: String) {
         viewModelScope.launch {
-            val queryTrimmed = query.trim()
+            val queryCorrected = query.trim().lowercase()
             _notBoughtWordsByQuery.value = notBoughtWords.value.filter { word ->
-                queryTrimmed.length <= word.wordText.length &&
-                        queryTrimmed in word.wordText.subSequence(0, queryTrimmed.length)
+                queryCorrected.length <= word.wordText.length &&
+                        queryCorrected in word.wordText.subSequence(0, queryCorrected.length)
             }
         }
     }
