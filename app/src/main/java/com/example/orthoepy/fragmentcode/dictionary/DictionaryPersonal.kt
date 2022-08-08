@@ -1,21 +1,19 @@
 package com.example.orthoepy.fragmentcode.dictionary
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.orthoepy.BaseFragment
-import com.example.orthoepy.R
 import com.example.orthoepy.adapters.WordsDictionaryAdapter
-import com.example.orthoepy.databinding.FragmentDictionaryClassicBinding
 import com.example.orthoepy.databinding.FragmentDictionaryPersonalBinding
+import com.example.orthoepy.entity.UserInterfaceUtils.launchFlow
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class DictionaryPersonal : BaseFragment() {
+class DictionaryPersonal : Fragment() {
 
     private var _binding: FragmentDictionaryPersonalBinding? = null
     private val binding get() = _binding!!

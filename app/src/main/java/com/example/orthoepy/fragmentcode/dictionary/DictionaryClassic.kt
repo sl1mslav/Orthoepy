@@ -1,28 +1,19 @@
 package com.example.orthoepy.fragmentcode.dictionary
 
 import android.os.Bundle
-import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.content.ContextCompat
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.viewModels
-import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.lifecycleScope
-import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.orthoepy.BaseFragment
-import com.example.orthoepy.R
 import com.example.orthoepy.adapters.WordsDictionaryAdapter
 import com.example.orthoepy.databinding.FragmentDictionaryClassicBinding
-import com.example.orthoepy.entity.Word
+import com.example.orthoepy.entity.UserInterfaceUtils.launchFlow
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class DictionaryClassic : BaseFragment() {
+class DictionaryClassic : Fragment() {
 
     private var _binding: FragmentDictionaryClassicBinding? = null
     private val binding get() = _binding!!
