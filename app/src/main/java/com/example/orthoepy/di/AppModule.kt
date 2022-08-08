@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.room.Room
 import com.example.orthoepy.data.database.DictionaryDao
 import com.example.orthoepy.data.database.DictionaryDatabase
+import com.example.orthoepy.data.repository.DatastoreRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -24,6 +25,10 @@ object AppModule {
             "Dictionary"
         ).createFromAsset("database/dictionary.db").build()
     }
+
+    @Provides
+    @Singleton
+    fun provideDataStore(@ApplicationContext appContext: Context) = DatastoreRepository(appContext)
 
     @Provides
     fun provideContext(@ApplicationContext appContext: Context) = appContext

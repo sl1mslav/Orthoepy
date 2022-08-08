@@ -7,13 +7,14 @@ import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.intPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
 import com.example.orthoepy.entity.UserPreferences
+import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
-class DatastoreRepository @Inject constructor(private val context: Context) {
+class DatastoreRepository @Inject constructor(@ApplicationContext private val context: Context) {
 
     private val Context.datastore by preferencesDataStore(name = "datastore")
 
