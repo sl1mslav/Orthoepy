@@ -2,7 +2,6 @@ package com.example.orthoepy.fragmentcode.store
 
 import android.animation.LayoutTransition
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,21 +10,16 @@ import android.widget.Toast
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.lifecycleScope
-import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.orthoepy.BaseFragment
 import com.example.orthoepy.R
 import com.example.orthoepy.adapters.WordsStoreAdapter
-import com.example.orthoepy.entity.Word
 import com.example.orthoepy.databinding.FragmentStoreBinding
+import com.example.orthoepy.entity.UserInterfaceUtils.launchFlow
+import com.example.orthoepy.entity.Word
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class StoreFragment : BaseFragment() {
+class StoreFragment : Fragment() {
 
     private var _binding: FragmentStoreBinding? = null
     private val binding get() = _binding!!
@@ -47,20 +41,17 @@ class StoreFragment : BaseFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.storeRecycler.layoutManager = LinearLayoutManager(
-            requireContext(),
-            LinearLayoutManager.VERTICAL,
-            false
-        )
-        binding.storeRecycler.adapter = wordAdapter
-        initRecyclerUpdates()
+        initRecycler()
 
         binding.addButton.setOnClickListener {
             viewModel.buyCheckedWords()
         }
 
-        binding.storeSearchOrtho.searchBar.addTextChangedListener {
-            viewModel.selectWordsByQuery(it.toString())
+        binding.storeSearchOrtho.searchBar.apply {
+            addTextChangedListener { viewModel.selectWordsByQuery(it.toString()) }
+            setOnClickListener {
+                it.requestFocus()
+            }
         }
     }
 
@@ -100,15 +91,26 @@ class StoreFragment : BaseFragment() {
                 }
             }.start()
         } else if (!toDisappear && binding.addButton.visibility != View.VISIBLE) {
-            binding.addButton.visibility = View.VISIBLE
-            binding.addButton.alpha = 0f
-            binding.addButton.animate().apply {
-                duration = 300L
-                alpha(1f)
-            }.start()
+            with (binding.addButton) {
+                visibility = View.VISIBLE
+                alpha = 0f
+                animate().apply {
+                    duration = 300L
+                    alpha(1f)
+                }.start()
+            }
         }
     }
-    private fun initRecyclerUpdates() {
+
+    private fun initRecycler() {
+        binding.storeRecycler.apply {
+            layoutManager = LinearLayoutManager(
+                requireContext(),
+                LinearLayoutManager.VERTICAL,
+                false
+            )
+            adapter = wordAdapter
+        }
         launchFlow {
             viewModel.notBoughtWords.collect {
                 wordAdapter.submitList(it)

@@ -1,27 +1,27 @@
 package com.example.orthoepy.fragmentcode.dictionary
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.core.widget.addTextChangedListener
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.viewpager2.widget.ViewPager2
-import com.example.orthoepy.BaseFragment
+import com.example.orthoepy.R
 import com.example.orthoepy.adapters.DictionaryVPAdapter
 import com.example.orthoepy.adapters.WordsDictionaryAdapter
 import com.example.orthoepy.databinding.FragmentDictionaryBinding
 import com.example.orthoepy.entity.DictionaryFragmentPage
-import com.example.orthoepy.entity.Word
+import com.example.orthoepy.entity.UserInterfaceUtils.getCurrentFragment
+import com.example.orthoepy.entity.UserInterfaceUtils.launchFlow
 import com.google.android.material.tabs.TabLayoutMediator
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.delay
 
 @AndroidEntryPoint
-class DictionaryFragment : BaseFragment() {
+class DictionaryFragment : Fragment() {
 
-    // TODO: Attach a currency counter
     // TODO: Expandable CardViews with the definitions of words (if possible)
     // TODO: Apply placeholder text on all fragments with empty RVs
 
@@ -45,7 +45,6 @@ class DictionaryFragment : BaseFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        // ViewPager2 TODO: fix incorrect onClick scroll up when clicking on the last ~5 elements
         val dictionaryVp = binding.dictionaryVp
         val adapter = DictionaryVPAdapter(this)
         dictionaryVp.apply {
@@ -59,8 +58,11 @@ class DictionaryFragment : BaseFragment() {
 
         setUpViewPagerCallback(dictionaryVp)
 
-        binding.storeSearchOrtho.searchBar.addTextChangedListener {
-            viewModel.selectWordsByQuery(it.toString(), page)
+        binding.storeSearchOrtho.searchBar.apply {
+            addTextChangedListener { viewModel.selectWordsByQuery(it.toString(), page) }
+            setOnClickListener {
+                it.requestFocus()
+            }
         }
 
         initFragmentCollectors()
@@ -94,6 +96,16 @@ class DictionaryFragment : BaseFragment() {
                 currentRvAdapter?.submitList(it)
             }
         }
+        launchFlow {
+            viewModel.availableLetters.collect {
+                changeCurrencyCounter(it?.currencyAmount.toString())
+            }
+        }
+    }
+
+    private fun changeCurrencyCounter(text: String) {
+        binding.availableLetters.currencyCv.findViewById<TextView>(R.id.available_letters_counter).text =
+            getString(R.string.available_letters, text)
     }
 
     override fun onDestroy() {
