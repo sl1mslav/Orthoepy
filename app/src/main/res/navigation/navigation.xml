@@ -9,7 +9,22 @@
         android:id="@+id/homeFragment"
         android:name="com.example.orthoepy.fragmentcode.home.HomeFragment"
         android:label="fragment_home"
-        tools:layout="@layout/fragment_home" />
+        tools:layout="@layout/fragment_home" >
+        <action
+            android:id="@+id/action_homeFragment_to_trainingFragment"
+            app:destination="@id/trainingFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/trainingFragment"
+        android:name="com.example.orthoepy.fragmentcode.training.TrainingFragment"
+        android:label="fragment_training"
+        tools:layout="@layout/training_fragment">
+        <action
+            android:id="@+id/action_trainingFragment_to_homeFragment"
+            app:destination="@id/homeFragment" />
+    </fragment>
+
     <fragment
         android:id="@+id/dictionaryFragment"
         android:name="com.example.orthoepy.fragmentcode.dictionary.DictionaryFragment"
