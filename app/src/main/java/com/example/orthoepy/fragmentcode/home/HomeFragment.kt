@@ -5,9 +5,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.example.orthoepy.R
 import com.example.orthoepy.databinding.FragmentHomeBinding
 import com.example.orthoepy.entity.UserInterfaceUtils.launchFlow
@@ -33,8 +33,8 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.examEgeCv.setOnClickListener {
-            Toast.makeText(requireContext(), "test", Toast.LENGTH_SHORT).show()
+        binding.classicTraining.setOnClickListener {
+            findNavController().navigate(R.id.action_homeFragment_to_trainingFragment)
         }
 
         launchFlow {
