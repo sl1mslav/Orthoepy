@@ -57,17 +57,6 @@ class WordsDictionaryAdapter(
                 )
             )
             setAnimFrame(this, word)
-//            root.setOnClickListener {
-//                onClick(word)
-//                playAnim(this, word.isFavourite.toBooleanStrict())
-//                word.isFavourite = (!word.isFavourite.toBoolean()).toString()
-//            }
-//            animatingButton.setOnClickListener {
-//                onClick(word)
-//                playAnim(this, word.isFavourite.toBooleanStrict())
-//                word.isFavourite = (!word.isFavourite.toBooleanStrict()).toString()
-//            }
-//        }
         }
     }
 

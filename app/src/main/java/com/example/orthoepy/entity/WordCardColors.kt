@@ -6,5 +6,5 @@ enum class WordCardColors(val color: Int) {
     PINK(R.color.pink),
     YELLOW(R.color.yellow),
     LIGHT_GREEN(R.color.light_green),
-    GREEN(R.color.green)
+    GREEN(R.color.green);
 }
