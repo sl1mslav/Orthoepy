@@ -21,6 +21,8 @@ class DictionaryRepository @Inject constructor(
 
     fun getExamWords(): Flow<List<Word>> = dictionaryDao.getExamWords()
 
+    fun getRandomWordsByLimit(limit: Int = 20): Flow<List<Word>> = dictionaryDao.getRandomWordsByLimit(limit)
+
     suspend fun buyWordInDB(word: Word) = dictionaryDao.update(word.copy(isBought = "true"))
 
     suspend fun markWordAsFavouriteInDB(word: Word) =

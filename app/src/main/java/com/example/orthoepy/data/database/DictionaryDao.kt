@@ -28,6 +28,9 @@ interface DictionaryDao {
     @Query("SELECT * FROM dictionary WHERE isExamWord = 'true' ORDER BY wordText ASC")
     fun getExamWords() : Flow<List<Word>>
 
+    @Query("SELECT * FROM dictionary WHERE isBought = 'true' OR isChecked = 'true' ORDER BY RANDOM() LIMIT :limit")
+    fun getRandomWordsByLimit(limit: Int = 20) : Flow<List<Word>>
+
     @Update
     suspend fun update(word: Word)
 
