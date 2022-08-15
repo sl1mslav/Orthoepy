@@ -2,6 +2,7 @@
 <!-- TODO: update the padding and spacing
       to make the layout identical to other fragments-->
 <androidx.constraintlayout.widget.ConstraintLayout
+    android:background="#19F44336"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -36,12 +37,13 @@
 
     <androidx.cardview.widget.CardView
         android:id="@+id/statistics_cv"
-        android:layout_width="180dp"
+        android:layout_width="0dp"
         android:layout_height="110dp"
-        android:layout_marginStart="16dp"
+        android:layout_marginHorizontal="16dp"
         android:layout_marginTop="20dp"
         app:cardCornerRadius="10dp"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/gift_cv"
         app:layout_constraintTop_toBottomOf="@+id/orthoepy">
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -62,10 +64,12 @@
 
     <androidx.cardview.widget.CardView
         android:id="@+id/gift_cv"
-        android:layout_width="180dp"
+        android:layout_width="0dp"
+        android:layout_marginStart="16dp"
         android:layout_height="110dp"
         android:layout_marginEnd="16dp"
         app:cardCornerRadius="10dp"
+        app:layout_constraintStart_toEndOf="@id/statistics_cv"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/statistics_cv">
 
@@ -108,28 +112,48 @@
         app:layout_constraintEnd_toEndOf="@id/gift_cv"
         app:layout_constraintTop_toBottomOf="@+id/exams_tv" />
 
-    <com.example.orthoepy.extralayout.TrainingCardView
-        android:id="@+id/exam_zno_cv"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        app:descriptionText="Варианты по норме внешнего независимого оценивания по украинскому языку"
-        app:icon="@drawable/ic_home"
-        app:labelText="ЗНО"
-        app:layout_constraintStart_toStartOf="@+id/exam_ege_cv"
-        app:layout_constraintEnd_toEndOf="@+id/gift_cv"
-        app:layout_constraintTop_toBottomOf="@+id/exam_ege_cv" />
-
     <TextView
         android:id="@+id/training_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="20dp"
         android:text="Тренировки"
         android:textColor="#000000"
         android:textSize="24sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/exam_zno_cv" />
+        app:layout_constraintTop_toBottomOf="@+id/exam_ege_cv" />
+
+    <com.example.orthoepy.extralayout.TrainingCardView
+        android:id="@+id/classic_training"
+        app:labelText="Классическая"
+        app:descriptionText="Тренировка из 20 случайных слов"
+        app:icon="@drawable/ic_classic"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="@id/exam_ege_cv"
+        app:layout_constraintEnd_toEndOf="@id/exam_ege_cv"
+        app:layout_constraintTop_toBottomOf="@id/training_tv"/>
+
+    <com.example.orthoepy.extralayout.TrainingCardView
+        android:id="@+id/personal_training"
+        app:labelText="Персональная"
+        app:descriptionText="Тренировка из выбранных слов"
+        app:icon="@drawable/ic_personal_star"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="@id/exam_ege_cv"
+        app:layout_constraintEnd_toEndOf="@id/exam_ege_cv"
+        app:layout_constraintTop_toBottomOf="@id/classic_training"/>
+
+    <com.example.orthoepy.extralayout.TrainingCardView
+        app:labelText="Брейн-шторм"
+        app:descriptionText="Сложная тренировка из 100 слов"
+        app:icon="@drawable/ic_speed_icon"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="@id/exam_ege_cv"
+        app:layout_constraintEnd_toEndOf="@id/exam_ege_cv"
+        app:layout_constraintTop_toBottomOf="@id/personal_training"/>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
